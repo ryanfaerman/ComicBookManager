@@ -1,1 +1,125 @@
 @import "elements.less";
+@import url(http://fonts.googleapis.com/css?family=Bangers#.css);
+
+@red:	rgb(193,0,0);
+@blue: 	rgb(0,40,148);
+@black: rgb(0,0,0);
+@brown: rgb(51,40,40);
+@white: rgb(255,237,237);
+
+// hardcore css reset
+html * {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: @red;
+}
+
+.container {
+	width: 320px;
+	margin: 0 auto;
+	
+	font: 16px Georgia, Times, Serif;
+	.bordered();
+	padding-top: 10px;
+}
+
+h1, h2 {
+	margin-bottom: 10px;
+
+	font-family: 'Bangers', Helvetica, Arial, Sans-Serif;
+	color: @brown;
+	text-align: center;
+	letter-spacing: .1em;
+}
+
+section#featured {
+	text-align: center;
+	color: @white;
+	padding: 5px;
+
+	img {
+		opacity: .85;
+		display: block;
+		z-index: 50;
+		margin-left: -15px;
+	}
+
+	a {
+		display: block;
+		position: relative;
+		top: -80px;
+		width: 150px;
+		margin: 20px auto;
+		background: @blue;
+		color: @white;
+
+		z-index: 150;
+
+		text-decoration: none;
+
+		font-weight: bold;
+
+		.rounded(10px);
+		padding: 10px;
+		.gradient(@blue, @blue, lighten(@blue, 10%));
+		border: 1px solid darken(@blue, 10%);
+		.box-shadow(0 1px 2px lighten(@black, 30%));
+	}
+}
+
+
+nav {
+	text-align: center;
+	background-color: @blue;
+	padding-top: 10px;
+	padding-bottom: 50px;
+
+	h2 {
+		color: @white;
+	}
+	input {
+		width: 90%;
+		margin-bottom: 10px;
+	}
+
+	ul {
+		list-style: none;
+
+		background: @white;
+		border: 1px solid @brown;
+		color: @black;
+
+		.box-shadow(0 1px 2px lighten(@black, 30%));
+
+		.rounded(5px);
+		width: 90%;
+		margin: 0 auto;
+
+		li {
+			border-bottom: 1px solid @brown;
+
+			&:last-child {
+				border-bottom: none;
+			}
+
+			a {
+				text-align: left;
+				display: block;
+				padding: 4px;
+				color: @brown;
+				text-decoration: none;
+
+				span {
+					font-size: .8em;
+					font-style: italic;
+
+					color: lighten(@brown, 20%);
+					float: right;
+				}
+			}
+		}
+	}
+}
