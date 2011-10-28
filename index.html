@@ -17,9 +17,6 @@
 	
 	<!-- Page Title-->
 	<title>Comic Book Manager</title>
-	
-	<!-- CSS -->
-	<!-- <link rel="stylesheet" href="assets/css/comics.css" type="text/css" media="screen" charset="utf-8"> -->
 
 	<!-- LESS -->
 	<link rel="stylesheet/less" href="assets/less/comics.less">
@@ -28,18 +25,42 @@
 	<script type="text/coffeescript" src="assets/coffee/comics.coffee"></script>
 
 	<!-- JS -->
-	<!-- <script src="assets/js/comics.js" type="text/javascript" charset="utf-8"></script> -->
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 	<script src="assets/js/coffee-script.js" type="text/javascript" charset="utf-8"></script>
 	<script src="assets/js/less.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-	<!-- content -->
-	
-	<div class="container">
-		<h1>Comic Books</h1>
-		<p>Everybody loves comic books (if you don't you need to get a life). This tool will help you manage your comic book collection and track which comic books you've lent to your friends.</p>
-		<a href="additem.html" class="btn cta">Add a Comic Book <br /><small>It's easy and free</small></a>
-	</div>
+
+<!-- content -->
+<div class="container">
+
+	<header>
+		<h1>Comic Book Manager</h1>
+	</header>
+
+	<section id="featured">
+		<p>Everybody loves comic books</p>
+		<p>Now you'll love managing them too!</p>
+		<img src="assets/img/comic-stack.png" />
+		
+		<a href="additem.html" class="button cta">Add a Comic Book <br /><small>It's easy and free</small></a>
+	</section>
+
+	<nav>
+		<h2>The Collection</h2>
+		<div id="search">
+			<form method="get">
+				<input type="search" name="q" results="5" />
+			</form>
+		</div>
+		<ul class="menu">
+			<li><a href="#">Children</a></li>
+			<li><a href="#">Teens <span>&lt; 18</span></a></li>
+			<li><a href="#">Adult <span>18+</span></a></li>
+			<li><a href="#">Mature <span>21+</span></a></li>
+		</ul>
+	</nav>
+</div>
+
 </body>
 </html>
