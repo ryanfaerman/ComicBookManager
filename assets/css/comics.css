@@ -1,0 +1,124 @@
+/*
+@project VFW Project 1
+@author  Ryan Faerman
+@term    September 2011
+*/
+@import url(http://fonts.googleapis.com/css?family=Bangers);
+
+/*
+colors:
+	red: rgb(193,0,0)
+	blue: rgb(0,40,148)
+	black: rgb(0,0,0)
+	brown: rgb(51,40,40)
+	white: rgb(255,237,237)
+*/
+
+html * {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font: 16px Georgia, Times, Serif;
+	background-color: rgb(193,0,0);
+}
+
+h1,h2,h3,h4,h5, legend {
+	font-family: 'Bangers', Helvetica, Arial, Sans-Serif;
+	color: rgb(51,40,40);
+}
+
+h1 {
+	text-align: center;
+	margin-bottom: 10px;
+	letter-spacing: .1em;
+}
+
+.container {
+	background-color: rgb(255,237,237);
+	width: 310px;
+	margin: 20px auto;
+	padding: 10px;
+	border: 10px solid rgb(0,40,148);
+	border-radius: 3px;
+}
+.btn.cta {
+	display: block;
+	width: 150px;
+	margin: 20px auto;
+	
+	text-align: center;
+	background: rgb(0,40,148);
+	color: #fff;
+	
+	border: 2px solid #000;
+	border-radius: 10px;
+	
+	text-decoration: none;
+	font-weight: bold;
+	
+	padding: 10px;
+	
+}
+
+.btn.cta small {
+	font-weight: normal;
+}
+
+
+
+fieldset {
+	border: none;
+	margin-bottom: 50px;
+}
+
+legend {
+	padding: 20px 0;
+}
+
+label {
+	display: block;	
+	font-weight: bold;
+	color: rgb(51,40,40);
+	
+}
+
+.clearfix {
+	margin-bottom: 10px;
+}
+
+input[type=text], input[type=range], input[type=date], textarea, select {
+	width: 90%;
+	border: 1px solid #ccc;
+	font-size: 1.3em;
+	border-radius: 3px;
+}
+
+input[type=text]:focus, input[type=date]:focus, textarea:focus {
+	border-color: #333;
+}
+
+input.error, textarea.error {
+	border: 5px solid rgb(193,0,0);
+}
+
+fieldset ul {
+	list-style: none;
+	margin-left: 20px;
+}
+
+#errorMsg {
+	padding: 5px;
+	margin: 10px;
+	color: rgb(193,0,0);
+	text-align: center;
+}
+
+div.item {
+	margin-bottom: 50px;
+}
+
+div.item ul {
+	list-style-type: none;
+}
