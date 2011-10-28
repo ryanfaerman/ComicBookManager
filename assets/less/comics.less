@@ -22,7 +22,7 @@ body {
 	margin: 0 auto;
 	
 	font: 16px Georgia, Times, Serif;
-	.bordered();
+	//.bordered();
 	padding-top: 10px;
 }
 
@@ -74,8 +74,7 @@ section#featured {
 nav {
 	text-align: center;
 	background-color: @blue;
-	padding-top: 10px;
-	padding-bottom: 50px;
+	padding: 25px 0;
 
 	h2 {
 		color: @white;
@@ -88,18 +87,50 @@ nav {
 	ul {
 		list-style: none;
 
-		background: @white;
-		border: 1px solid @brown;
+		&.menu {
+			background: @white;
+			border: 1px solid @brown;
+			.box-shadow(0 1px 2px lighten(@black, 30%));
+			.rounded(5px);
+
+			width: 90%;
+			margin: 0 auto;
+		}
+		
 		color: @black;
 
-		.box-shadow(0 1px 2px lighten(@black, 30%));
 
-		.rounded(5px);
-		width: 90%;
-		margin: 0 auto;
 
 		li {
 			border-bottom: 1px solid @brown;
+
+			ul {
+				display: none;
+			}
+
+			&.open {
+				background: lighten(@white, 10%);
+				a {
+					font-weight: bold;
+				}
+				ul {
+					display: block;
+					padding-bottom: 10px;
+
+					li {
+						border: none;
+
+						a {
+							padding: 2px;
+							padding-left: 15px;
+							height: 24px;
+
+							font: 16px/24px Helvetica, Arial, Sans-Serif;
+
+						}
+					}
+				}
+			}
 
 			&:last-child {
 				border-bottom: none;
