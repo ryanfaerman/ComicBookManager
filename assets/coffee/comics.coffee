@@ -1,15 +1,8 @@
-$('nav a.menu ').live 'click', (e) ->
-	e.preventDefault()
-	$('nav .open').removeClass 'open'
-	$(this).parent('li').addClass 'open'
-
-$('.sub-menu a').live 'click', (e) ->
-	e.preventDefault()
 
 
-# ## Database Primer
-# This has all the example data, to be replaced by the local 
-# storage version of the database
+
+# An object of the example data, to be replaced by the 
+# local storage version of the database
 comics =
 	mature: [
 		{title: "Punisher: Road to Remember"}
@@ -42,6 +35,7 @@ comics =
 		{title: "Dora the Explorer #14"}
 	]
 
+# Conversion of the category keys to text
 categories =
 	mature: 
 		title: "Mature"
@@ -50,34 +44,82 @@ categories =
 		title: "Adult"
 		age: "18+"
 	teen:
-		title: "Teen"
-		age: "18+"
+		title: "Teens"
+		age: "13-18"
 	preteen:
 		title: "Pre-Teen"
-		age: "18+"
+		age: "9-12"
 	children:
 		title: "Children"
-		age: "18+"
+		age: ""
 
+# From first to last
 category_order = ['children', 'teen', 'preteen', 'adult', 'mature']
 
 # Our little collection of Mustache Templates
 templates =
-
 	# The list items for the category
 	collection: '''
-			<li>
-				<a href="#" class="menu">{{category}}</a>
-				<ul class="sub-menu">
-					{{%IMPLICIT-ITERATOR}}
-					{{#comics}}
-					<li><a href="#">{{.}}</a></li>
-					{{/comics}}
-				</ul>
-			</li>
+		<li>
+			<a href="#{{key}}" class="menu">{{#category}}{{title}} <span>{{age}}</span>{{/category}}</a>
+			<ul class="sub-menu">
+				{{#comics}}
+				<li><a href="#">{{title}}</a></li>
+				{{/comics}}
+			</ul>
+		</li>
+	'''
+	# List of items in the category
+	category: '''
+		<li><a href="#{{category}}/{{key}}">{{title}}</a></li>
+	'''
+	# the back button
+	back: '''
+		<li><a href="#{{key}}">&larr; {{category}}</a></li>
 	'''
 
+$menu = $('nav ul.menu');
+
+manager =
+	show:
+		collection: ->
+			$menu.html ''
+			$.each category_order, (i, e) ->
+				data = 
+					key: e
+					category: categories[e]
+					comics: comics[e]
+
+				html = Mustache.to_html templates.collection, data
+				$menu.append html
+		category: (c)->
+			$menu.html ''
+
+			data = 
+				key: c
+				category: categories[c]
+			html = Mustache.to_html templates.back, data
+			$menu.append html
+
+			$.each comics[c], (i,e) ->
+				data =
+					key: i
+					category: c
+					title: e.title
+				
+				html = Mustache.to_html templates.category, data
+				$menu.append html
+
+
+
 $ ->
-	$.each category_order, (i, e) ->
-		console.log e
+	manager.show.collection()
+
+$('nav a.menu ').live 'click', (e) ->
+	e.preventDefault()
+	$('nav .open').removeClass 'open'
+	$(this).parent('li').addClass 'open'
+
+$('.sub-menu a').live 'click', (e) ->
+	e.preventDefault()
 
