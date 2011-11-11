@@ -18,12 +18,13 @@ body {
 }
 
 .container {
-	width: 320px;
+	width: 318px;
 	margin: 0 auto;
 	
 	font: 16px Georgia, Times, Serif;
 	//.bordered();
 	padding-top: 10px;
+	overflow: hidden;
 }
 
 h1, h2 {
@@ -112,6 +113,7 @@ nav {
 				background: lighten(@white, 10%);
 				a {
 					font-weight: bold;
+
 				}
 				ul {
 					display: block;
@@ -119,6 +121,7 @@ nav {
 
 					li {
 						border: none;
+						margin-bottom: 20px;
 
 						a {
 							padding: 2px;
@@ -141,6 +144,8 @@ nav {
 				display: block;
 				padding: 4px 8px;
 				height: 38px;
+
+
 				
 				text-decoration: none;
 				text-align: left;
@@ -155,7 +160,131 @@ nav {
 					color: lighten(@brown, 20%);
 					float: right;
 				}
+
+				img {
+						float: left;
+						margin-left: -5px;
+						margin-top: 0px;
+						margin-right: 10px;
+					}
+
+				
 			}
+		}
+	}
+}
+
+.comic {
+	.images {
+		width: 300%;
+		height: 300px;
+		margin-left: -100%;
+		-webkit-transform: scale(.9);
+		img {
+			margin: 5px;
+		}
+	}
+	
+	b {
+		background: lighten(@brown, 50%);
+		width: 20px;
+		height: 20px;
+		margin: 10px 3px;
+		display: inline-block;
+		border-radius: 10px;
+		&:nth-child(3) {
+			background: @brown;
+		}
+	}
+	
+}
+
+.btn {
+	//display: block;
+	position: relative;
+	//top: -80px;
+	//width: 150px;
+	//margin: 20px auto;
+	background: @blue;
+	color: @white;
+
+
+	text-decoration: none;
+
+	font-weight: bold;
+
+	.rounded(10px);
+	padding: 10px;
+	.gradient(@blue, @blue, lighten(@blue, 10%));
+	border: 1px solid darken(@blue, 10%);
+	.box-shadow(0 1px 2px lighten(@black, 30%));
+}
+
+
+form {
+	input, textarea, select {
+		width: 90%;
+		border: 1px solid #ccc;
+		margin: 4px auto;
+		display: block;
+		font-size: 18px;
+
+		background-color: @white;
+	}
+
+	input[type=checkbox] {
+		width: auto;
+		display: inline;
+	}
+
+	.clearfix {
+		margin: 10px 0;
+		padding: 5px;
+
+		.error-message {
+			display: none;
+		}
+
+		&.error {
+			background: @blue;
+			color: @white;
+
+			&.wrong {
+				background: @red;
+				color: @brown;
+			}
+			
+			.error-message {
+				display: block;
+			}
+		}
+	}
+
+	fieldset {
+		border: none;
+
+		legend {
+			font-family: 'Bangers', Helvetica, Arial, Sans-Serif;
+			color: @brown;
+			text-align: center;
+			letter-spacing: .1em;
+			font-size: 130%;
+		}
+		label {
+			font-family: 'Bangers', Helvetica, Arial, Sans-Serif;
+			font-size: 20px;
+			letter-spacing: .08em;
+		}
+
+
+	}
+
+	
+
+	.actions {
+		font-size: 20px;
+		.btn {
+			font-size: 20px;
 		}
 	}
 }
