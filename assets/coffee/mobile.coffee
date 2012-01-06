@@ -75,9 +75,6 @@ $ ->
 		
 		comic.save()
 
-		#storage.push window.COMICS_DB+data.age_group, data
-		#comic_storage.add(data)
-
 
 
 		$(this)[0].reset()
