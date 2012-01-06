@@ -1,6 +1,13 @@
 window.COMICS_DB = '_comics_db_'
 window.DEBUG = yes
+window.CATEGORIES =
+	children: 'Children'
+	preteen: 'Pre-Teen'
+	teen: 'Teens'
+	adult: 'Adult'
+	mature: 'Mature'
 
+# A basic storage engine
 window.storage = storage = 
 	set: (k, v) ->
 		localStorage.setItem(k, JSON.stringify(v))
@@ -29,7 +36,17 @@ window.storage = storage =
 	clear: -> 
 		localStorage.clear()
 
+# A wannabe model
+window.comic = comic = ->
+	save: ->
+		storage.push window.COMICS_DB + this.age_group, this
+		$.event.trigger 'comic_saved', this
+
 $ ->
+	setTimeout ->
+		$.event.trigger 'comic_saved'
+	, 100
+
 	now = new Date()
 	today = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate()
 	$("#pubdate").val today
@@ -45,7 +62,7 @@ $ ->
 			console.log 'no error'
 	
 	$('form#add-comic').submit (e) ->
-
+		comic = new comic
 		data =
 			title: $(this).find('#title').val()
 			rating: $(this).find('#range').val()
@@ -54,7 +71,14 @@ $ ->
 			summary: $(this).find('#summary').val()
 			age_group: $(this).find('#age_group').val()
 		
-		storage.push window.COMICS_DB+data.age_group, data
+		$.extend comic, data
+		
+		comic.save()
+
+		#storage.push window.COMICS_DB+data.age_group, data
+		#comic_storage.add(data)
+
+
 
 		$(this)[0].reset()
 		unless confirm "Your Comic was Saved!\nWould you like to add another?"
@@ -62,7 +86,29 @@ $ ->
 		else
 			$.mobile.silentScroll(0);
 		return false
+	
+$('#collection').bind 'comic_saved', ->
+	collection = ''
+	$.each window.CATEGORIES, (age_group, group_name) ->
+		comics = storage.get window.COMICS_DB+age_group
+		console.log comics
 
-
+		section = "<li><a>#{group_name}</a>"
+		section += '<ul data-theme="">'
+		if comics
+			$.each comics, (i, comic) ->
+				section += "<li><a href='#comic' id='#{i}'>#{comic.title}</a></li>"
+		section += '</ul></li>'
 		
+		
+		collection += section
+	$(this).html(collection).listview('refresh')
+
+
+
+	
+
+
+
+
 
