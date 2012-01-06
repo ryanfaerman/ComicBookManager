@@ -90,20 +90,27 @@ $('#collection').bind 'comic_saved', ->
 		comics = storage.get window.COMICS_DB+age_group
 		console.log comics
 
-		section = "<li><a>#{group_name}</a>"
+		section = "<li class='#{age_group}'><a>#{group_name}</a>"
 		section += '<ul data-theme="">'
 		if comics
 			$.each comics, (i, comic) ->
-				section += "<li><a href='#comic' id='#{i}'>#{comic.title}</a></li>"
+				section += "<li><a href='#comic' id='#{i}' class='comic' rel='#{age_group}'>#{comic.title}</a></li>"
 		section += '</ul></li>'
 		
 		
 		collection += section
 	$(this).html(collection).listview('refresh')
 
+$('a.comic').live 'click', (e) ->
+	comics = storage.get window.COMICS_DB + $(this).attr('rel')
+	comic = comics[$(this).attr('id')]
+	console.log comic
+	$('#comic').find('h2').text(comic.title)
+	$('#comic').find('div.summary').text(comic.summary)
 
 
-	
+$('#comic').live 'pageinit', (e) ->
+	console.log e	
 
 
 
