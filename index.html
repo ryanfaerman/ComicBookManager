@@ -164,11 +164,11 @@
 	</div><!-- /header -->
 
 	<div data-role="content" data-theme="a">
-		<form action="" method="post">
+		<form action="" method="post" id="add-comic">
 			<fieldset>
 							
 				<div class="clearfix" data-role="fieldcontain" >
-					<label for="title">Title</label>
+					<label for="title">Title<span class="error_msg">REQUIRED</span></label>
 					<div class="input">
 						<input type="text" class="large" name="title" id="title" placeholder="Iron Man: Armor Wars"/>
 					</div>
@@ -195,7 +195,7 @@
 				</div><!-- /field -->
 			
 				<div class="clearfix" data-role="fieldcontain">
-					<label for="summary">Summary</label>
+					<label for="summary">Summary<span class="error_msg">REQUIRED</span></label>
 					<div class="input">
 						<textarea class="large" name="summary" id="summary" rows="5"></textarea>
 					</div>
@@ -205,11 +205,11 @@
 					<label for="age_group">Age Group</label>
 					<div class="input">
 						<select class="large" name="age_group" id="age_group">
-							<option>Children</option>
-							<option>Pre-Teen</option>
-							<option>Teens</option>
-							<option selected="selected">Adult</option>
-							<option>Mature</option>
+							<option value="children">Children</option>
+							<option value="preteen">Pre-Teen</option>
+							<option value="teen">Teens</option>
+							<option value="adult" selected="selected">Adult</option>
+							<option value="mature">Mature</option>
 						</select>
 					</div>
 				</div><!-- /field -->
