@@ -38,3 +38,23 @@
 	}
 	
 }
+
+.error_msg {
+	display: none;
+}
+
+.error {
+
+	.error_msg {
+		display: inline;
+		background: @red;
+		border: darken(@red, 25%);
+		color: @white;
+		font-size: .7em;
+		margin: 0 1em;
+		padding: 3px 5px;
+
+
+		.rounded();
+	}
+}
