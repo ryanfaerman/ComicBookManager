@@ -36,6 +36,30 @@ window.storage = storage =
 	clear: -> 
 		localStorage.clear()
 
+window.dataSource = dataSource =
+	csv: (path, cb) ->
+		window.output = []
+		fields = []
+		$.get path, (d) ->
+			$.each d.split("\n"), (i, line) ->
+				$.each line.split(','), (j, col) ->
+					if i is 0
+						fields[j] = col.trim()
+					else
+						if j is 0 then output[i] = {}
+						col_name = fields[j]
+						output[i][col_name] = col.trim()
+			
+			output.shift()
+			if cb then cb(output)
+	json: (path, cb) ->
+		$.get path, (d) ->
+			if cb then cb(JSON.parse(d))
+		
+					
+				
+
+
 # A wannabe model
 window.comic = comic = ->
 	save: ->
