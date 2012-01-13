@@ -151,11 +151,10 @@ $('#collection').bind 'comic_saved', ->
 $('a.comic').live 'click', (e) ->
 	comics = storage.get window.COMICS_DB + $(this).attr('rel')
 	comic = comics[$(this).attr('id')]
-	console.log comic
 
 	storage.set 'now_viewing', db: window.COMICS_DB + $(this).attr('rel'), id: $(this).attr('id')
 
-	$('#comic').find('h2').text(comic.title)
+	$('#comic').find('h2, h1').text(comic.title)
 	$('#comic').find('div.summary').text(comic.summary)
 
 $('a.load').live 'click', (e) ->
@@ -177,6 +176,7 @@ $('a#purge-storage').live 'click', (e) ->
 
 $('#comic').live 'pageinit', (e) ->
 	console.log e	
+
 
 
 
