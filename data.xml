@@ -1,0 +1,38 @@
+<items>
+	<item>
+		<title>Dora the Explorer</title>
+		<rating>7</rating>
+		<pubdate>2010-2-23</pubdate>
+		<age_group>children</age_group>
+	</item>
+	<item>
+		<title>Bob the Builder</title>
+		<rating>5</rating>
+		<pubdate>2010-2-23</pubdate>
+		<age_group>children</age_group>
+	</item>
+	<item>
+		<title>The Smurfs Adventure</title>
+		<rating>3</rating>
+		<pubdate>2010-2-23</pubdate>
+		<age_group>children</age_group>
+	</item>
+	<item>
+		<title>The Chipmunks</title>
+		<rating>6</rating>
+		<pubdate>2010-2-23</pubdate>
+		<age_group>children</age_group>
+	</item>
+	<item>
+		<title>Astroboy</title>
+		<rating>10</rating>
+		<pubdate>2010-2-23</pubdate>
+		<age_group>children</age_group>
+	</item>
+	<item>
+		<title>The Adventures of Batman</title>
+		<rating>9</rating>
+		<pubdate>2010-2-23</pubdate>
+		<age_group>children</age_group>
+	</item>
+</items>
