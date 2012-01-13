@@ -43,10 +43,6 @@
 			</div>
 		</div>
 
-		<p></p>
-		<p></p>
-		
-
 		<h2>The Collection</h2>
 		<ul data-role="listview" data-theme="d"  data-inset="false" data-count-theme="d" id="collection">
 			<li class="children">
@@ -70,6 +66,13 @@
 				<ul data-theme=""></ul>
 			</li>
 		</ul>
+		<br />
+		<ul data-role="listview" data-theme="d"  data-inset="true" data-count-theme="d" id="admin-tasks">
+			<li data-role="list-divider">Administrative Tasks</li>
+			<li><a href="#popup">Populate from Data File</a></li>
+			<li><a href="#purge">Purge Local Storage</a></li>
+		</ul>
+		
 
 	</div><!-- /content -->
 </div><!-- /page one -->
@@ -81,7 +84,7 @@
 	<div data-role="header">
 		<a data-rel="back" data-direction="reverse"  data-icon="arrow-l">Back</a>
 		<h1>Comic Title</h1>
-		<a href="#add" data-role="button" data-transition="flip" data-icon="gear">Edit</a>
+		<a href="#add" id="edit" data-role="button" data-transition="flip" data-icon="gear">Edit</a>
 	</div><!-- /header -->
 
 	<div data-role="content" data-theme="a">
@@ -108,18 +111,35 @@
 <div data-role="page" id="popup">
 
 	<div data-role="header" data-theme="e">
-		<h1>Dialog</h1>
+		<h1>Populate from Data File</h1>
 	</div><!-- /header -->
 
 	<div data-role="content" data-theme="d">	
-		<h2>Popup</h2>
-		<p>I have an id of "popup" on my page container and only look like a dialog because the link to me had a <code>data-rel="dialog"</code> attribute which gives me this inset look and a <code>data-transition="pop"</code> attribute to change the transition to pop. Without this, I'd be styled as a normal page.</p>		
-		<p><a href="#list" data-rel="back" data-role="button" data-inline="true" data-icon="back">Back to page "one"</a></p>	
+		<h2>Select Data Source</h2>
+		<a href="data.csv"  data-role="button" data-ajax="false" data-icon="" class="load">Adult (CSV)</a>
+		<a href="data.json" data-role="button" data-ajax="false" data-icon="" class="load">Mature (JSON)</a>
+		<a href="data.xml"  data-role="button" data-ajax="false" data-icon="" class="load">Children (XML)</a>
+			
+		<p><a href="#list" data-rel="back" data-role="button" data-inline="true" data-icon="back">Done</a></p>	
 	</div><!-- /content -->
-	
-	<div data-role="footer">
-		<h4>Page Footer</h4>
-	</div><!-- /footer -->
+
+</div><!-- /page popup -->
+
+<!-- Start of third page: #purge -->
+<div data-role="page" id="purge">
+
+	<div data-role="header" data-theme="e">
+		<h1>Confirm Storage Purge</h1>
+	</div><!-- /header -->
+
+	<div data-role="content" data-theme="d">	
+		<h2>Are you sure you want to purge local storage?</h2>
+		<h3>This is permanent and cannot be undone</h3>
+		<p>
+			<a id="purge-storage" href="#list" data-rel="back" data-role="button" data-inline="true" data-icon="">Yes</a>
+			<a href="#list" data-rel="back" data-role="button" data-inline="true" data-icon="">No</a></p>	
+	</div><!-- /content -->
+
 </div><!-- /page popup -->
 
 <!-- Start of page: #add -->
@@ -149,10 +169,6 @@
 					</div>
 				</div><!-- /field -->
 			
-				<div class="clearfix" data-role="fieldcontain" >
-					<input type="checkbox" name="favorite" id="checkbox-0" class="custom" value="yes"/>
-					<label for="checkbox-0">Add to Favorites</label>
-				</div> <!-- /field -->
 			
 				<div class="clearfix" data-role="fieldcontain" >
 					<label for="pubdate">Publish Date</label>
