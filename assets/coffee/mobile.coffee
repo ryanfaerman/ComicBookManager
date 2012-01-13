@@ -36,32 +36,55 @@ window.storage = storage =
 	clear: -> 
 		localStorage.clear()
 
+# Data File Importer
 window.dataSource = dataSource =
+	# this is the most rudimentary of the three parsers
+	# try anything fancy, and it'll probably break
 	csv: (path, cb) ->
-		window.output = []
+		output = []
 		fields = []
 		$.get path, (d) ->
 			$.each d.split("\n"), (i, line) ->
 				$.each line.split(','), (j, col) ->
 					if i is 0
-						fields[j] = col.trim()
+						# normalize the fields to lowercase
+						# no real reason, I just like them that way
+						fields[j] = col.trim().toLowerCase()
 					else
 						if j is 0 then output[i] = {}
 						col_name = fields[j]
 						output[i][col_name] = col.trim()
 			
+			# some cruft ends up in the first field
 			output.shift()
 			if cb then cb(output)
+	# JSON parser exists only for completeness
 	json: (path, cb) ->
 		$.get path, (d) ->
-			if cb then cb(JSON.parse(d))
-		
+			if cb then cb(d)
+		, 'json'
+	xml: (path, cb) ->
+		output = []
+		$.get path, (xml) ->
+			$(xml).find('item').each (i, item) ->
+				output[i] = 
+					title:		$(item).find('title').text()
+					rating: 	$(item).find('rating').text()
+					pubdate:	$(item).find('pubdate').text()
+					age_group:	$(item).find('age_group').text()
+
+					
+			if cb then cb(output)					
+		, 'xml'
+	load: (path, cb) ->
+		fileType = path.split('.').pop()
+		this[fileType](path, cb)
 					
 				
 
 
 # A wannabe model
-window.comic = comic = ->
+window.Comic = Comic = ->
 	save: ->
 		storage.push window.COMICS_DB + this.age_group, this
 		$.event.trigger 'comic_saved', this
@@ -86,7 +109,7 @@ $ ->
 			console.log 'no error'
 	
 	$('form#add-comic').submit (e) ->
-		comic = new comic
+		comic = new Comic
 		data =
 			title: $(this).find('#title').val()
 			rating: $(this).find('#range').val()
@@ -129,9 +152,28 @@ $('a.comic').live 'click', (e) ->
 	comics = storage.get window.COMICS_DB + $(this).attr('rel')
 	comic = comics[$(this).attr('id')]
 	console.log comic
+
+	storage.set 'now_viewing', db: window.COMICS_DB + $(this).attr('rel'), id: $(this).attr('id')
+
 	$('#comic').find('h2').text(comic.title)
 	$('#comic').find('div.summary').text(comic.summary)
 
+$('a.load').live 'click', (e) ->
+	dataSource.load $(this).attr('href'), (data) ->
+		console.log data
+		$.each data, (i, record) ->
+			comic = new Comic
+			$.extend comic, record
+			comic.save()
+
+		$.mobile.changePage '#list'
+	e.preventDefault()
+	return false
+
+$('a#purge-storage').live 'click', (e) ->
+	console.log 'hello!'
+	storage.clear()
+	$.event.trigger 'comic_saved'
 
 $('#comic').live 'pageinit', (e) ->
 	console.log e	
