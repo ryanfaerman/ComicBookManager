@@ -1,0 +1,217 @@
+<!DOCTYPE html> 
+<html> 
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<title>Comic Book Manager</title> 
+
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript">
+	$(document).bind("mobileinit", function(){
+		$.mobile.page.prototype.options.addBackBtn = true;
+	});
+	</script>
+	<script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+
+	<script type="text/coffeescript" src="mobile.coffee"></script>
+
+	<script src="coffee-script.js" type="text/javascript" charset="utf-8"></script>
+	<style>
+	.error_msg {
+		display: none;
+	}
+	.error .error_msg {
+		display: inline;
+		background: #c10000;
+		border: #420000;
+		color: #ffeded;
+		font-size: .7em;
+		margin: 0 1em;
+		padding: 3px 5px;
+	}
+</style>
+</head> 
+
+	
+<body> 
+
+<!-- Start of first page: #home -->
+<div data-role="page" id="home" >
+
+	<div data-role="header" data-theme="b">
+		<h1>Comic Book Manager</h1>
+	</div><!-- /header -->
+
+	<div data-role="content" data-theme="d">	
+		<div class="ui-grid-a">
+			<div class="ui-block-a"><img src="comic-stack.png" width="200px" /></div>
+			<div class="ui-block-b">
+				<br /><br /><br /><br />
+				<a href="#add" data-role="button" data-transition="slide" data-icon="plus" >Add to your <Br />collection</a>
+			</div>
+		</div>
+
+		<h2>The Collection</h2>
+		<ul data-role="listview" data-theme="d"  data-inset="false" data-count-theme="d" id="collection">
+			<li class="children">
+				<a>Children</a>
+				<ul data-theme=""></ul>
+			</li>
+			<li class="preteen">
+				<a>Pre-Teen</a>
+				<ul data-theme=""></ul>
+			</li>
+			<li class="teen">
+				<a>Teens</a>
+				<ul data-theme=""></ul>
+			</li>
+			<li class="adult">
+				<a>Adult</a>
+				<ul data-theme=""></ul>
+			</li>
+			<li class="mature">
+				<a>Mature</a>
+				<ul data-theme=""></ul>
+			</li>
+		</ul>
+		<br />
+		<ul data-role="listview" data-theme="d"  data-inset="true" data-count-theme="d" id="admin-tasks">
+			<li data-role="list-divider">Administrative Tasks</li>
+			<!--<li><a href="#popup">Populate from Data File</a></li>-->
+			<!--<li><a href="#purge">Purge Local Storage</a></li>-->
+			<li><a href="#" data-ajax="false" id="refresh_couch">Refresh from Couch</a></li>
+		</ul>
+		
+
+	</div><!-- /content -->
+</div><!-- /page one -->
+
+
+<!-- Start of second page: #comic -->
+<div data-role="page" id="comic" data-theme="a">
+
+	<div data-role="header">
+		<a data-rel="back" data-direction="reverse"  data-icon="arrow-l">Back</a>
+		<h1>Comic Title</h1>
+		<a href="#add" id="edit" data-role="button" data-transition="flip" data-icon="gear">Edit</a>
+	</div><!-- /header -->
+
+	<div data-role="content" data-theme="a">
+		<h2>Comic Title</h2>
+		
+		<div class="summary"></div>
+			
+		<p><a data-rel="back" data-direction="reverse"  data-icon="arrow-l" data-theme="b" data-role="button">Back to Comic Books</a></p>	
+
+		
+	</div><!-- /content -->
+</div><!-- /page two -->
+
+
+<!-- Start of third page: #popup -->
+<div data-role="page" id="popup">
+
+	<div data-role="header" data-theme="e">
+		<h1>Populate from Data File</h1>
+	</div><!-- /header -->
+
+	<div data-role="content" data-theme="d">	
+		<h2>Select Data Source</h2>
+		<a href="data.csv"  data-role="button" data-ajax="false" data-icon="" class="load">Adult (CSV)</a>
+		<a href="data.json" data-role="button" data-ajax="false" data-icon="" class="load">Mature (JSON)</a>
+		<a href="data.xml"  data-role="button" data-ajax="false" data-icon="" class="load">Children (XML)</a>
+			
+		<p><a href="#list" data-rel="back" data-role="button" data-inline="true" data-icon="back">Done</a></p>	
+	</div><!-- /content -->
+
+</div><!-- /page popup -->
+
+<!-- Start of third page: #purge -->
+<div data-role="page" id="purge">
+
+	<div data-role="header" data-theme="e">
+		<h1>Confirm Storage Purge</h1>
+	</div><!-- /header -->
+
+	<div data-role="content" data-theme="d">	
+		<h2>Are you sure you want to purge local storage?</h2>
+		<h3>This is permanent and cannot be undone</h3>
+		<p>
+			<a id="purge-storage" href="#list" data-rel="back" data-role="button" data-inline="true" data-icon="">Yes</a>
+			<a href="#list" data-rel="back" data-role="button" data-inline="true" data-icon="">No</a></p>	
+	</div><!-- /content -->
+
+</div><!-- /page popup -->
+
+<!-- Start of page: #add -->
+<div data-role="page" id="add" data-theme="a">
+
+	<div data-role="header">
+		<a data-rel="back" data-direction="reverse"  data-icon="arrow-l">Cancel</a>
+		<h1>Add a Comic Book</h1>
+	</div><!-- /header -->
+
+	<div data-role="content" data-theme="a">
+		<form action="" method="post" id="add-comic">
+			<fieldset>
+							
+				<div class="clearfix" data-role="fieldcontain" >
+					<label for="title">Title<span class="error_msg">REQUIRED</span></label>
+					<div class="input">
+						<input type="text" class="large" name="title" id="title" placeholder="Iron Man: Armor Wars"/>
+					</div>
+				</div><!-- /field -->
+
+			
+				<div class="clearfix" data-role="fieldcontain" >
+					<label for="rating">Rating</label>
+					<div class="input">
+						<input type="range" class="large" name="range" id="range" min="0" max="10" value="6" />
+					</div>
+				</div><!-- /field -->
+			
+			
+				<div class="clearfix" data-role="fieldcontain" >
+					<label for="pubdate">Publish Date</label>
+					<div class="input">
+						<input type="date" class="large" name="pubdate" id="pubdate" />
+					</div>
+				</div><!-- /field -->
+			
+				<div class="clearfix" data-role="fieldcontain">
+					<label for="summary">Summary<span class="error_msg">REQUIRED</span></label>
+					<div class="input">
+						<textarea class="large" name="summary" id="summary" rows="5"></textarea>
+					</div>
+				</div><!-- /field -->
+			
+				<div class="clearfix" data-role="fieldcontain">
+					<label for="age_group">Age Group</label>
+					<div class="input">
+						<select class="large" name="age_group" id="age_group">
+							<option value="children">Children</option>
+							<option value="preteen">Pre-Teen</option>
+							<option value="teen">Teens</option>
+							<option value="adult" selected="selected">Adult</option>
+							<option value="mature">Mature</option>
+						</select>
+					</div>
+				</div><!-- /field -->
+	
+
+				<fieldset class="ui-grid-a">
+					<div class="ui-block-a"><a data-rel="back" data-role="button"  data-direction="reverse" data-icon="delete">Cancel</a></div>
+					<div class="ui-block-b"><button type="submit" id="submit" data-theme="b" data-icon="check">Save</button></div>
+						   
+				</fieldset>
+			</fieldset>
+		</form>
+
+		
+	</div><!-- /content -->
+</div><!-- /page two -->
+
+</body>
+</html>

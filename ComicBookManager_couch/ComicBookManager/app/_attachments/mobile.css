@@ -1,0 +1,12 @@
+.error_msg {
+  display: none;
+}
+.error .error_msg {
+  display: inline;
+  background: #c10000;
+  border: #420000;
+  color: #ffeded;
+  font-size: .7em;
+  margin: 0 1em;
+  padding: 3px 5px;
+}
