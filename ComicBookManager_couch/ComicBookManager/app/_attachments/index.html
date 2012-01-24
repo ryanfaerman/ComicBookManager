@@ -14,6 +14,7 @@
 	});
 	</script>
 	<script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+	<script type="text/javascript" src="jquery.couch.js"></script>
 
 	<script type="text/coffeescript" src="mobile.coffee"></script>
 
@@ -55,26 +56,7 @@
 
 		<h2>The Collection</h2>
 		<ul data-role="listview" data-theme="d"  data-inset="false" data-count-theme="d" id="collection">
-			<li class="children">
-				<a>Children</a>
-				<ul data-theme=""></ul>
-			</li>
-			<li class="preteen">
-				<a>Pre-Teen</a>
-				<ul data-theme=""></ul>
-			</li>
-			<li class="teen">
-				<a>Teens</a>
-				<ul data-theme=""></ul>
-			</li>
-			<li class="adult">
-				<a>Adult</a>
-				<ul data-theme=""></ul>
-			</li>
-			<li class="mature">
-				<a>Mature</a>
-				<ul data-theme=""></ul>
-			</li>
+			
 		</ul>
 		<br />
 		<ul data-role="listview" data-theme="d"  data-inset="true" data-count-theme="d" id="admin-tasks">
@@ -89,25 +71,7 @@
 </div><!-- /page one -->
 
 
-<!-- Start of second page: #comic -->
-<div data-role="page" id="comic" data-theme="a">
 
-	<div data-role="header">
-		<a data-rel="back" data-direction="reverse"  data-icon="arrow-l">Back</a>
-		<h1>Comic Title</h1>
-		<a href="#add" id="edit" data-role="button" data-transition="flip" data-icon="gear">Edit</a>
-	</div><!-- /header -->
-
-	<div data-role="content" data-theme="a">
-		<h2>Comic Title</h2>
-		
-		<div class="summary"></div>
-			
-		<p><a data-rel="back" data-direction="reverse"  data-icon="arrow-l" data-theme="b" data-role="button">Back to Comic Books</a></p>	
-
-		
-	</div><!-- /content -->
-</div><!-- /page two -->
 
 
 <!-- Start of third page: #popup -->

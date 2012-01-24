@@ -1,4 +1,5 @@
 window.COMICS_DB = '_comics_db_'
+window.COUCH_DB = 'comicbookmanager'
 window.DEBUG = yes
 window.CATEGORIES =
 	children: 'Children'
@@ -130,69 +131,44 @@ $ ->
 		else
 			$.mobile.silentScroll(0);
 		return false
+
+$ ->
+	$categories = $(@).find '#collection'
+	$categories.empty()
+
+	$.each window.CATEGORIES, (age_group, category_name) ->
+		$categories.append """
+			<li class="#{age_group}"><a href="category.html?category=#{age_group}">#{category_name}</a></li>
+		"""
+	$categories.listview 'refresh'
+
+urlData = (url) ->
+	url = $($.mobile.activePage).data 'url'
+	getData = url.split('?').pop()
+
+	output = {}
+
+	$.each getData.split('&'), (i, data) ->
+		bits = data.split '='
+		k = decodeURIComponent(bits[0])
+		v = decodeURIComponent(bits[1])
+		output[k] = v
 	
-$('#collection').bind 'comic_saved', ->
-	collection = ''
-	$(this).html('')
+	output
 
-	refreshListviewTick = no
-	refreshCollection = ->
-		clearTimeout refreshListviewTick
-		refreshListviewTick = setTimeout ->
-			$('#collection').listview 'refresh'
-		, 500
-	
-	$.each window.CATEGORIES, (age_group, group_name) ->
-		$.get "_view/by_category?key=\"#{age_group}\"", (category) ->
-			comics = category.rows
-			
-			section = "<li class='#{age_group}'><a>#{group_name}</a>"
-			section += '<ul data-theme="">'
-			if comics.length > 0
-				$.each comics, (i, comic) ->
-					section += "<li><a href='#comic' id='#{comic.id}' class='comic' rel='#{age_group}'>#{comic.value.title}</a></li>"
-			section += '</ul></li>'
+$('#category').live 'pageshow', ->
+	category = urlData()['category']
+	$(@).find('h1').html window.CATEGORIES[category]
+	$category_list = $(@).find '#category-list'
+	$category_list.empty()
 
-			$('#collection').append(section)
-			refreshCollection()
-		, 'json'
-
-
-
-$('a.comic').live 'click', (e) ->
-	comics = storage.get window.COMICS_DB + $(this).attr('rel')
-	comic = comics[$(this).attr('id')]
-
-	storage.set 'now_viewing', db: window.COMICS_DB + $(this).attr('rel'), id: $(this).attr('id')
-
-	$('#comic').find('h2, h1').text(comic.title)
-	$('#comic').find('div.summary').text(comic.summary)
-
-$('a.load').live 'click', (e) ->
-	dataSource.load $(this).attr('href'), (data) ->
-		console.log data
-		$.each data, (i, record) ->
-			comic = new Comic
-			$.extend comic, record
-			comic.save()
-
-		$.mobile.changePage '#list'
-	e.preventDefault()
-	return false
-
-$('a#purge-storage').live 'click', (e) ->
-	console.log 'hello!'
-	storage.clear()
-	$.event.trigger 'comic_saved'
-
-$('#comic').live 'pageinit', (e) ->
-	console.log e	
-
-$('#refresh_couch').live 'click', (e) ->
-	$.event.trigger 'comic_saved'
-	alert 'it worked!'
-	return false
-
+	$.couch.db('comicbookmanager').view "comicbookmanager/by_category", key: category, success: (data) ->
+		$.each data.rows, (i, comic) ->
+			console.log comic
+			$category_list.append """
+				<li><a href="comic.html?id=#{comic.id}">#{comic.value.title}</a></li>
+			"""
+		$category_list.listview 'refresh'
 
 
 
