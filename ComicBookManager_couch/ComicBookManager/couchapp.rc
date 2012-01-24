@@ -4,7 +4,7 @@
       "db": "http://127.0.0.1:5984/comicbookmanager"
     },
     "cloudant": {
-      "db": "https://sightendstillyarittlyina:S2RUcw3fdtjSPh5JNuieLHyj@ryanfaerman.cloudant.com/comicbooks"
+      "db": "https://metithentsveneselynother:CDLIKVOrdlvkWkJgJ5sOM5os@ryanfaerman.cloudant.com/comicbookmanager"
     }
   }
 }

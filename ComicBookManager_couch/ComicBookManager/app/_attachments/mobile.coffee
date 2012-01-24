@@ -194,10 +194,12 @@ $('#form').live 'pageshow', ->
 			pubdate: $(@).find('#pubdate').val()
 			summary: $(@).find('#summary').val()
 			age_group: $(@).find('#age_group').val()
-		console.log data
-		if $(@).find('#_id').val() then data._id = $(@).find('#_id').val()
-		if $(@).find('#_rev').val() then _rev = $(@).find('#_rev').val()
 		
+		if $(@).find('#_id').val() then data._id = $(@).find('#_id').val()
+		if $(@).find('#_rev').val() then data._rev = $(@).find('#_rev').val()
+		console.log data
+
+		$(@)[0].reset()
 
 		$.couch.db('comicbookmanager').saveDoc data, 
 		success: (data) ->
@@ -206,11 +208,12 @@ $('#form').live 'pageshow', ->
 			if rev > 1
 				console.log 'updated!'
 				alert "Comic Updated!"				
-				
+				$.mobile.changePage "comic.html?id=#{data.id}", reverse: true
+				transition: 'flip'
 			else
-			alert "Comic Saved!"
-			$.mobile.changePage 'index.html', reverse: true
-			$(@)[0].reset()
+				alert "Comic Saved!"
+				$.mobile.changePage 'index.html', reverse: true
+			
 		error: (data) ->
 			console.log data
 		
