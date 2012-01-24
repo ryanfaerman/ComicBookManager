@@ -90,47 +90,6 @@ window.Comic = Comic = ->
 		storage.push window.COMICS_DB + this.age_group, this
 		$.event.trigger 'comic_saved', this
 
-$ ->
-	setTimeout ->
-		$.event.trigger 'comic_saved'
-	, 100
-
-	now = new Date()
-	today = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate()
-	$("#pubdate").val today
-
-
-	$('form#add-comic button[type=submit]').bind 'click', (e) ->
-		$form = $(this).parents('form')
-		unless $form.find('#title').val()
-			e.preventDefault()
-			$form.find('#title').parents('.clearfix').addClass 'error'
-		else
-			$form.find('.error').removeClass 'error'
-			console.log 'no error'
-	
-	$('form#add-comic').submit (e) ->
-		comic = new Comic
-		data =
-			title: $(this).find('#title').val()
-			rating: $(this).find('#range').val()
-			favorite: $(this).find('#checkbox-0').is(':checked')
-			pubdate: $(this).find('#pubdate').val()
-			summary: $(this).find('#summary').val()
-			age_group: $(this).find('#age_group').val()
-		
-		$.extend comic, data
-		
-		comic.save()
-
-
-
-		$(this)[0].reset()
-		unless confirm "Your Comic was Saved!\nWould you like to add another?"
-			history.back()
-		else
-			$.mobile.silentScroll(0);
-		return false
 
 $ ->
 	$categories = $(@).find '#collection'
@@ -164,11 +123,97 @@ $('#category').live 'pageshow', ->
 
 	$.couch.db('comicbookmanager').view "comicbookmanager/by_category", key: category, success: (data) ->
 		$.each data.rows, (i, comic) ->
-			console.log comic
 			$category_list.append """
 				<li><a href="comic.html?id=#{comic.id}">#{comic.value.title}</a></li>
 			"""
 		$category_list.listview 'refresh'
 
+$('#comic').live 'pageshow', ->
+	_id = urlData()['id']
+	$comic = $(@)
+	$.couch.db('comicbookmanager').openDoc _id, success: (comic) ->
+		$comic.find('h1').html comic.title
+		$comic.find('#edit').attr 'href', "form.html?id=#{comic._id}"
+		$comic.find('h2').html "#{comic.title} (#{comic.rating} / 10)"
+		$comic.find('#age_group').html "Age Group: #{window.CATEGORIES[comic.age_group]}"
+		$comic.find('#pubdate').html "Published: #{comic.pubdate}" if comic.pubdate
+		$comic.find('#summary').html "#{comic.summary}" if comic.summary
+
+$('#form').live 'pageshow', ->
+	_id = urlData()['id']
+
+	now = new Date()
+	today = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate()
+
+	if _id
+		# edit mode
+		$(@).find('a#delete').show()
+		$form = $(@).find('form')
+		$.couch.db('comicbookmanager').openDoc _id, success: (comic) ->
+			console.log comic
+			$form.find('#_id').val comic._id
+			$form.find('#_rev').val comic._rev
+			$form.find('#title').val comic.title
+			$form.find('#range').val comic.rating
+			$form.find('#pubdate').val comic.pubdate
+			$form.find('#summary').val comic.summary if comic.summary
+
+			$form.find("#age_group option[value=#{comic.age_group}").attr 'selected', 'selected'
+	else
+		# add mode
+		$(@).find("#pubdate").val today
+		$(@).find('a#delete').hide()
+
+	$(@).find('form#add-comic button[type=submit]').bind 'click', (e) ->
+		$form = $(@).parents('form')
+		unless $form.find('#title').val()
+			e.preventDefault()
+			$form.find('#title').parents('.clearfix').addClass 'error'
+		else
+			$form.find('.error').removeClass 'error'
+	
+	$(@).find('a#delete').bind 'click', (e) ->
+		console.log 'delete clicked!'
+		if confirm "Deleting is Permanent and cannot be undone, still delete?"
+			console.log 'doDelete'
+			toRemove = 
+				_id: $('#_id').val()
+				_rev: $('#_rev').val()
+			$.couch.db('comicbookmanager').removeDoc toRemove, success: (data) ->
+				console.log data
+				alert "Comic Deleted"
+				$.mobile.changePage 'index.html', reverse: true
+		else
+			console.log 'nope'
+
+	
+	$(@).find('form#add-comic').submit (e) ->
+		data =
+			title: $(@).find('#title').val()
+			rating: $(@).find('#range').val()
+			pubdate: $(@).find('#pubdate').val()
+			summary: $(@).find('#summary').val()
+			age_group: $(@).find('#age_group').val()
+		console.log data
+		if $(@).find('#_id').val() then data._id = $(@).find('#_id').val()
+		if $(@).find('#_rev').val() then _rev = $(@).find('#_rev').val()
+		
+
+		$.couch.db('comicbookmanager').saveDoc data, 
+		success: (data) ->
+			rev = data.rev.split('-').shift()
+			console.log rev
+			if rev > 1
+				console.log 'updated!'
+				alert "Comic Updated!"				
+				
+			else
+			alert "Comic Saved!"
+			$.mobile.changePage 'index.html', reverse: true
+			$(@)[0].reset()
+		error: (data) ->
+			console.log data
+		
+			
 
 

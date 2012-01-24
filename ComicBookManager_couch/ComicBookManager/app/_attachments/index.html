@@ -50,7 +50,7 @@
 			<div class="ui-block-a"><img src="comic-stack.png" width="200px" /></div>
 			<div class="ui-block-b">
 				<br /><br /><br /><br />
-				<a href="#add" data-role="button" data-transition="slide" data-icon="plus" >Add to your <Br />collection</a>
+				<a href="form.html" data-role="button" data-transition="slide" data-icon="plus" >Add to your <br />collection</a>
 			</div>
 		</div>
 
@@ -69,113 +69,6 @@
 
 	</div><!-- /content -->
 </div><!-- /page one -->
-
-
-
-
-
-<!-- Start of third page: #popup -->
-<div data-role="page" id="popup">
-
-	<div data-role="header" data-theme="e">
-		<h1>Populate from Data File</h1>
-	</div><!-- /header -->
-
-	<div data-role="content" data-theme="d">	
-		<h2>Select Data Source</h2>
-		<a href="data.csv"  data-role="button" data-ajax="false" data-icon="" class="load">Adult (CSV)</a>
-		<a href="data.json" data-role="button" data-ajax="false" data-icon="" class="load">Mature (JSON)</a>
-		<a href="data.xml"  data-role="button" data-ajax="false" data-icon="" class="load">Children (XML)</a>
-			
-		<p><a href="#list" data-rel="back" data-role="button" data-inline="true" data-icon="back">Done</a></p>	
-	</div><!-- /content -->
-
-</div><!-- /page popup -->
-
-<!-- Start of third page: #purge -->
-<div data-role="page" id="purge">
-
-	<div data-role="header" data-theme="e">
-		<h1>Confirm Storage Purge</h1>
-	</div><!-- /header -->
-
-	<div data-role="content" data-theme="d">	
-		<h2>Are you sure you want to purge local storage?</h2>
-		<h3>This is permanent and cannot be undone</h3>
-		<p>
-			<a id="purge-storage" href="#list" data-rel="back" data-role="button" data-inline="true" data-icon="">Yes</a>
-			<a href="#list" data-rel="back" data-role="button" data-inline="true" data-icon="">No</a></p>	
-	</div><!-- /content -->
-
-</div><!-- /page popup -->
-
-<!-- Start of page: #add -->
-<div data-role="page" id="add" data-theme="a">
-
-	<div data-role="header">
-		<a data-rel="back" data-direction="reverse"  data-icon="arrow-l">Cancel</a>
-		<h1>Add a Comic Book</h1>
-	</div><!-- /header -->
-
-	<div data-role="content" data-theme="a">
-		<form action="" method="post" id="add-comic">
-			<fieldset>
-							
-				<div class="clearfix" data-role="fieldcontain" >
-					<label for="title">Title<span class="error_msg">REQUIRED</span></label>
-					<div class="input">
-						<input type="text" class="large" name="title" id="title" placeholder="Iron Man: Armor Wars"/>
-					</div>
-				</div><!-- /field -->
-
-			
-				<div class="clearfix" data-role="fieldcontain" >
-					<label for="rating">Rating</label>
-					<div class="input">
-						<input type="range" class="large" name="range" id="range" min="0" max="10" value="6" />
-					</div>
-				</div><!-- /field -->
-			
-			
-				<div class="clearfix" data-role="fieldcontain" >
-					<label for="pubdate">Publish Date</label>
-					<div class="input">
-						<input type="date" class="large" name="pubdate" id="pubdate" />
-					</div>
-				</div><!-- /field -->
-			
-				<div class="clearfix" data-role="fieldcontain">
-					<label for="summary">Summary<span class="error_msg">REQUIRED</span></label>
-					<div class="input">
-						<textarea class="large" name="summary" id="summary" rows="5"></textarea>
-					</div>
-				</div><!-- /field -->
-			
-				<div class="clearfix" data-role="fieldcontain">
-					<label for="age_group">Age Group</label>
-					<div class="input">
-						<select class="large" name="age_group" id="age_group">
-							<option value="children">Children</option>
-							<option value="preteen">Pre-Teen</option>
-							<option value="teen">Teens</option>
-							<option value="adult" selected="selected">Adult</option>
-							<option value="mature">Mature</option>
-						</select>
-					</div>
-				</div><!-- /field -->
-	
-
-				<fieldset class="ui-grid-a">
-					<div class="ui-block-a"><a data-rel="back" data-role="button"  data-direction="reverse" data-icon="delete">Cancel</a></div>
-					<div class="ui-block-b"><button type="submit" id="submit" data-theme="b" data-icon="check">Save</button></div>
-						   
-				</fieldset>
-			</fieldset>
-		</form>
-
-		
-	</div><!-- /content -->
-</div><!-- /page two -->
 
 </body>
 </html>
